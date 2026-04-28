@@ -1,0 +1,55 @@
+name: submit:native:prod
+
+defaults:
+  tools:
+    bun: 1.3.5
+  run:
+    working_directory: <WORKING_DIRECTORY>
+
+jobs:
+  # Generate fingerprint
+  fingerprint:
+    name: Generate Fingerprint
+    type: fingerprint
+
+  # Get Android build by fingerprint
+  get_android_build:
+    name: Get Android Build
+    type: get-build
+    needs: [fingerprint]
+    if: always()
+    params:
+      platform: android
+      fingerprint_hash: ${{ needs.fingerprint.outputs.fingerprint_hash }}
+      profile: production
+      distribution: store
+
+  # Get iOS build by fingerprint
+  get_ios_build:
+    name: Get iOS Build
+    type: get-build
+    needs: [fingerprint]
+    if: always()
+    params:
+      platform: ios
+      fingerprint_hash: ${{ needs.fingerprint.outputs.fingerprint_hash }}
+      profile: production
+      distribution: store
+
+  # Submit Android to store
+  submit_android:
+    name: Submit Android to Store
+    type: submit
+    needs: [get_android_build]
+    if: ${{ needs.get_android_build.outputs.build_id != '' }}
+    params:
+      build_id: ${{ needs.get_android_build.outputs.build_id }}
+
+  # Submit iOS to store
+  submit_ios:
+    name: Submit iOS to Store
+    type: submit
+    needs: [get_ios_build]
+    if: ${{ needs.get_ios_build.outputs.build_id != '' }}
+    params:
+      build_id: ${{ needs.get_ios_build.outputs.build_id }}

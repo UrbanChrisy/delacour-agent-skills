@@ -1,0 +1,72 @@
+name: build:native:dev
+
+defaults:
+  tools:
+    bun: 1.3.5
+  run:
+    working_directory: <WORKING_DIRECTORY>
+
+jobs:
+  # Fingerprint this PR to see what native capabilities it needs
+  fingerprint:
+    name: Fingerprint
+    type: fingerprint
+
+  # Check if we have an existing Android development client
+  get_android_build:
+    name: Check for Android build
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+      profile: development
+      platform: android
+
+  # Check if we have an existing iOS development client
+  get_ios_build:
+    name: Check for iOS build
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+      profile: development
+      platform: ios
+
+  # Check if we have an existing iOS development client
+  get_cicd_build:
+    name: Check for iOS cicd build
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+      profile: cicd
+      platform: ios
+
+  # If we don't get a build_id from get_android_build, move forward with building from the ground up
+  build_android:
+    name: Build Android
+    needs: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    type: build
+    params:
+      platform: android
+      profile: development
+
+  # If we don't get a build_id from get_ios_build, move forward with building from the ground up
+  build_ios:
+    name: Build iOS
+    needs: [get_ios_build]
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: development
+
+  build_cicd:
+    name: Build iOS Simulator
+    needs: [get_cicd_build]
+    if: ${{ !needs.get_cicd_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: cicd
