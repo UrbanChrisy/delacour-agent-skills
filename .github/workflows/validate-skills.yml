@@ -1,0 +1,28 @@
+name: Validate Skills
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "skills/**"
+      - "scripts/validate-skills.ts"
+  pull_request:
+    paths:
+      - "skills/**"
+      - "scripts/validate-skills.ts"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Validate SKILL.md frontmatter
+        run: bun run scripts/validate-skills.ts
+
+      - name: Validate links in skills
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: bun run scripts/validate-skills.ts --check-links
