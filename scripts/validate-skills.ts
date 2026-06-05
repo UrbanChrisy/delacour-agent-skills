@@ -28,17 +28,19 @@ function parseFrontmatter(
   content: string,
 ): { fm: FrontMatter; body: string } {
   const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
-  if (!match) return { fm: {}, body: content };
+  if (!match?.[1] || match[2] === undefined) return { fm: {}, body: content };
 
+  const fmBlock = match[1];
+  const bodyBlock = match[2];
   const fm: FrontMatter = {};
   let currentPrefix = "";
 
-  for (const line of match[1].split("\n")) {
+  for (const line of fmBlock.split("\n")) {
     if (!line.trim() || line.trim().startsWith("#")) continue;
 
     // Nested key (e.g. "  author: value" under metadata:)
     const nestedMatch = line.match(/^(\s+)([\w-]+)\s*:\s*(.+)$/);
-    if (nestedMatch && currentPrefix) {
+    if (nestedMatch?.[2] && nestedMatch[3] !== undefined && currentPrefix) {
       const key = `${currentPrefix}.${nestedMatch[2]}`;
       fm[key] = parseValue(nestedMatch[3].trim());
       continue;
@@ -46,9 +48,9 @@ function parseFrontmatter(
 
     // Top-level key
     const topMatch = line.match(/^([\w-]+)\s*:\s*(.*)$/);
-    if (topMatch) {
+    if (topMatch?.[1] !== undefined) {
       const key = topMatch[1];
-      const value = topMatch[2].trim();
+      const value = topMatch[2]?.trim() ?? "";
       if (value) {
         fm[key] = parseValue(value);
       } else {
@@ -59,7 +61,7 @@ function parseFrontmatter(
     }
   }
 
-  return { fm, body: match[2] };
+  return { fm, body: bodyBlock };
 }
 
 function parseValue(value: string): unknown {
