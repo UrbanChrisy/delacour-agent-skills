@@ -5,7 +5,7 @@ license: UNLICENSED
 allowed-tools: Read, Write, Edit, Bash(*), Glob, Grep
 metadata:
   author: chris@delacour.co.nz
-  version: "0.1.0"
+  version: "0.1.1"
   category: database
   tags: [drizzle, postgresql, database, bun, monorepo]
   argument-hint: <package-name>
@@ -60,15 +60,11 @@ If `$1` is empty, ask the user for a package name. Detect `@{org}` scope from ro
 
 ### `packages/$1/tsconfig.json`
 
-```json
-{
-  "extends": "@{org}/tsconfig/tsconfig.base.json",
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "include": ["src", "scripts", "drizzle.config.ts"]
-}
-```
+Use the **`packages/db`** variant from `/dlc-scaffold-tsconfig` (extends base, includes `src`, `scripts`, `drizzle.config.ts`).
+
+### `packages/$1/biome.jsonc`
+
+Use the **minimal variant (Elysia / UI / DB / Auth)** from `/dlc-scaffold-biome`.
 
 ### `packages/$1/.env.example`
 
