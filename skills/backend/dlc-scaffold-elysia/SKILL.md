@@ -5,7 +5,7 @@ license: UNLICENSED
 allowed-tools: Read, Write, Edit, Bash(*), Glob, Grep
 metadata:
   author: chris@delacour.co.nz
-  version: "0.1.0"
+  version: "0.1.1"
   category: backend
   tags: [elysia, backend, api, bun, drizzle, monorepo]
   argument-hint: <app-name>
@@ -68,35 +68,11 @@ If `$1` is empty, ask the user for an app name. Detect `@{org}` scope from root 
 
 ### `apps/$1/tsconfig.json`
 
-```json
-{
-  "extends": "@{org}/tsconfig/tsconfig.base.json",
-  "compilerOptions": {
-    "composite": false,
-    "rootDir": ".",
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
-}
-```
+Use the **Elysia app** variant from `/dlc-scaffold-tsconfig`.
 
 ### `apps/$1/biome.jsonc`
 
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": "//",
-  "root": false,
-  "files": {
-    "includes": ["src/**/*"]
-  }
-}
-```
+Use the **minimal variant (Elysia / UI / DB / Auth)** from `/dlc-scaffold-biome`.
 
 ### `apps/$1/drizzle.config.ts`
 
