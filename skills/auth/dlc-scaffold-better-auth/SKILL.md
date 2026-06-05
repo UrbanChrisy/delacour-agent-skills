@@ -4,7 +4,7 @@ description: Scaffold better-auth with Drizzle + PostgreSQL in a Bun monorepo. E
 license: UNLICENSED
 metadata:
   author: chris@delacour.co.nz
-  version: "0.1.0"
+  version: "0.1.1"
   category: auth
   tags: [auth, better-auth, drizzle, otp, oauth]
 ---
@@ -62,7 +62,9 @@ Create `packages/<name>/` with the following files:
 }
 ```
 
-**`tsconfig.json`** - extend workspace base with bundler module resolution, no declaration output.
+**`tsconfig.json`** - use the `packages/auth` variant from `/dlc-scaffold-tsconfig` (extends base, bundler module resolution, no declaration output).
+
+**`biome.jsonc`** - use the minimal variant (Elysia / UI / DB / Auth) from `/dlc-scaffold-biome`.
 
 **`src/index.ts`** - re-export everything from `./auth.config`.
 
