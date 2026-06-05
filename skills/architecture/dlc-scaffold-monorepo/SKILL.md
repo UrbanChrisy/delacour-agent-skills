@@ -5,7 +5,7 @@ license: UNLICENSED
 allowed-tools: Read, Write, Edit, Bash(*), Glob, Grep
 metadata:
   author: chris@delacour.co.nz
-  version: "0.1.0"
+  version: "0.2.0"
   category: architecture
   tags: [monorepo, turborepo, bun, scaffolding, workspace]
   argument-hint: <org-name>
@@ -84,13 +84,7 @@ Create root directory structure and config files.
 
 ### `biome.jsonc`
 
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": ["./packages/biome-config/root.jsonc"],
-  "root": true
-}
-```
+Created by `/dlc-scaffold-biome` (root config that extends the shared `packages/biome-config/root.jsonc`).
 
 ### `.pre-commit-config.yaml`
 
@@ -161,184 +155,15 @@ main().catch((error) => {
 
 ## Step 2 - Shared Packages
 
-Create `packages/` with three shared packages.
+Create `packages/` with three shared packages. The Biome and TypeScript config packages are owned by dedicated skills (`/dlc-scaffold-biome`, `/dlc-scaffold-tsconfig`) - run them as part of this step.
 
 ### 2.1 `packages/biome-config`
 
-**`packages/biome-config/package.json`**:
-
-```json
-{
-  "name": "@$1/biome-config",
-  "version": "1.0.0",
-  "description": "Shared Biome configurations",
-  "exports": {
-    "./root.jsonc": "./root.jsonc",
-    "./react.jsonc": "./react.jsonc"
-  },
-  "files": ["root.jsonc", "react.jsonc"],
-  "peerDependencies": {
-    "@biomejs/biome": "^2.0.0"
-  }
-}
-```
-
-**`packages/biome-config/biome.jsonc`**:
-
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": "//",
-  "root": false,
-  "files": { "includes": ["*.jsonc", "package.json"] }
-}
-```
-
-**`packages/biome-config/root.jsonc`** (base config all apps/packages extend):
-
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true,
-    "defaultBranch": "main"
-  },
-  "files": { "ignoreUnknown": true },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "tab",
-    "lineWidth": 120,
-    "indentWidth": 2
-  },
-  "assist": {
-    "enabled": true,
-    "actions": {
-      "source": { "organizeImports": "on" }
-    }
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true,
-      "a11y": {
-        "useKeyWithClickEvents": "off",
-        "useAnchorContent": "off"
-      },
-      "correctness": {
-        "noEmptyPattern": "off",
-        "useExhaustiveDependencies": "warn",
-        "useUniqueElementIds": "off"
-      },
-      "suspicious": {
-        "noArrayIndexKey": "off",
-        "noExplicitAny": "warn"
-      },
-      "style": {
-        "noUnusedTemplateLiteral": "off",
-        "useSelfClosingElements": "off",
-        "useFilenamingConvention": "error",
-        "noParameterAssign": "error",
-        "useAsConstAssertion": "error",
-        "useDefaultParameterLast": "error",
-        "useEnumInitializers": "error",
-        "useSingleVarDeclarator": "error",
-        "useNumberNamespace": "error",
-        "noInferrableTypes": "error",
-        "noUselessElse": "error"
-      },
-      "complexity": {
-        "noExcessiveCognitiveComplexity": "warn"
-      }
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "double",
-      "trailingCommas": "es5",
-      "semicolons": "always"
-    }
-  },
-  "json": { "formatter": { "enabled": true } }
-}
-```
-
-**`packages/biome-config/react.jsonc`**:
-
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": ["./root.jsonc"],
-  "css": {
-    "parser": { "tailwindDirectives": true }
-  }
-}
-```
+Run `/dlc-scaffold-biome` to create the shared Biome package (`package.json`, `biome.jsonc`, `root.jsonc`, `react.jsonc`) and the root `biome.jsonc`. That skill is the single source of truth for all Biome config.
 
 ### 2.2 `packages/tsconfig`
 
-**`packages/tsconfig/package.json`**:
-
-```json
-{
-  "name": "@$1/tsconfig",
-  "version": "1.0.0",
-  "description": "Shared TypeScript configurations",
-  "files": ["tsconfig.base.json", "tsconfig.react.json"]
-}
-```
-
-**`packages/tsconfig/biome.jsonc`**:
-
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": "//",
-  "root": false,
-  "files": { "includes": ["*.json", "package.json"] }
-}
-```
-
-**`packages/tsconfig/tsconfig.base.json`**:
-
-```json
-{
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "composite": true,
-    "isolatedModules": true,
-    "lib": ["es2022"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "noEmitOnError": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "es2022",
-    "customConditions": ["@$1/source"]
-  }
-}
-```
-
-**`packages/tsconfig/tsconfig.react.json`**:
-
-```json
-{
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "rootDir": "src",
-    "jsx": "react-jsx",
-    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "outDir": "dist"
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
-}
-```
+Run `/dlc-scaffold-tsconfig` to create the shared TypeScript package (`package.json`, `biome.jsonc`, `tsconfig.base.json`, `tsconfig.react.json`). That skill is the single source of truth for all tsconfig config.
 
 ### 2.3 `packages/types`
 
@@ -364,15 +189,7 @@ Create `packages/` with three shared packages.
 }
 ```
 
-**`packages/types/tsconfig.json`**:
-
-```json
-{
-  "extends": "@$1/tsconfig/tsconfig.base.json",
-  "compilerOptions": { "outDir": "./dist" },
-  "include": ["src"]
-}
-```
+**`packages/types/tsconfig.json`**: use the `packages/types` variant from `/dlc-scaffold-tsconfig`.
 
 **`packages/types/src/index.ts`**:
 
