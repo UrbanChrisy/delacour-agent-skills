@@ -35,9 +35,15 @@ Our responsibility is simple: maintain well-crafted `SKILL.md` files in the righ
 
 Skills are organized by line of business and cross-cutting concern:
 
-| Directory       | Category | Description                                          |
-|-----------------|----------|------------------------------------------------------|
-| `skills/mobile/` | Mobile  | React Native / Expo scaffolding and mobile patterns  |
+| Directory | Category | Description |
+| --- | --- | --- |
+| `skills/mobile/` | Mobile | React Native / Expo scaffolding and mobile patterns |
+| `skills/architecture/` | Architecture | Monorepo root and project structure scaffolding |
+| `skills/backend/` | Backend | Backend API app scaffolding (Elysia) |
+| `skills/frontend/` | Frontend | Web app and UI package scaffolding (TanStack, UI components) |
+| `skills/desktop/` | Desktop | Desktop app scaffolding (Tauri) |
+| `skills/database/` | Database | Shared database package scaffolding (Drizzle + Postgres) |
+| `skills/auth/` | Auth | Authentication scaffolding (better-auth) |
 
 The CLI recursively discovers `SKILL.md` files regardless of nesting depth, so the category directory is for human organization, not a CLI requirement. Add new categories as new directories under `skills/` when needed.
 
