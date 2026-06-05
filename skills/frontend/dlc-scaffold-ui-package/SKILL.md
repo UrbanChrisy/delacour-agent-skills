@@ -5,7 +5,7 @@ license: UNLICENSED
 allowed-tools: Read, Write, Edit, Bash(*), Glob, Grep
 metadata:
   author: chris@delacour.co.nz
-  version: "0.1.0"
+  version: "0.1.1"
   category: frontend
   tags: [ui, components, base-ui, cva, tailwind, monorepo]
   argument-hint: <package-name>
@@ -67,36 +67,11 @@ If `$1` is empty, use `ui`. Detect `@{org}` scope from root `package.json`.
 
 ### `packages/$1/tsconfig.json`
 
-```json
-{
-  "extends": "@{org}/tsconfig/tsconfig.react.json",
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "compilerOptions": {
-    "rootDir": ".",
-    "noEmit": true,
-    "paths": {
-      "@/*": ["./src/*"],
-      "@{org}/core/components": ["./src/components/*"],
-      "@{org}/core/ui": ["./src/components/ui/*"],
-      "@{org}/core/lib": ["./src/lib/*"],
-      "@{org}/core/hooks": ["./src/hooks/*"]
-    }
-  }
-}
-```
+Use the **`packages/ui`** variant from `/dlc-scaffold-tsconfig` (extends react, `noEmit: true`, component path aliases).
 
 ### `packages/$1/biome.jsonc`
 
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": "//",
-  "root": false,
-  "files": {
-    "includes": ["src/**/*"]
-  }
-}
-```
+Use the **minimal variant (Elysia / UI / DB / Auth)** from `/dlc-scaffold-biome`.
 
 ### `packages/$1/components.json`
 
