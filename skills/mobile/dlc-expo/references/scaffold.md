@@ -1,6 +1,6 @@
 # Expo App Scaffold (detailed procedure)
 
-Follow these steps in order when creating a new Expo app via the `mobile-create-expo-app` skill. Each step includes the exact commands and file contents to use. Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
+Follow these steps in order when creating a new Expo app via the `dlc-expo` skill. Each step includes the exact commands and file contents to use. Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
 
 ## Steps
 

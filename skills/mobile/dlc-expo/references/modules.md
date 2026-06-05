@@ -1,6 +1,6 @@
 # Modules Scaffold (detailed procedure)
 
-Mandatory step in the `mobile-create-expo-app` skill. Establishes the colocated **module pattern** under `src/modules/` so future feature code has a consistent home. Each domain (e.g. `auth`, `trade`, `transactions`) owns its own `components/`, `sheets/`, `contexts/`, `hooks/`, and `utils/` subfolders.
+Mandatory step in the `dlc-expo` skill. Establishes the colocated **module pattern** under `src/modules/` so future feature code has a consistent home. Each domain (e.g. `auth`, `trade`, `transactions`) owns its own `components/`, `sheets/`, `contexts/`, `hooks/`, and `utils/` subfolders.
 
 No code is generated here. Only `src/modules/` plus two markdown files are created. Subfolders are added on demand the first time a module needs them.
 

@@ -1,9 +1,9 @@
 ---
-name: mobile-create-expo-app
+name: dlc-expo
 description: Scaffold a Expo app with TypeScript using Bun, typed `app.config.ts`, and Expo Router. Delegates the full scaffold procedure to `references/scaffold.md` (prompts for app name + iOS bundle identifier + Android package, runs `bun create expo-app` with `blank-typescript`, migrates `app.json` to `app.config.ts`, installs Expo Router + peers, wires up `src/app`). Use when the user asks to create a new Expo app, bootstrap a minimal React Native / Expo project with Bun, start a fresh Expo TypeScript project with file-based routing, or set up EAS Workflows / Expo CI/CD on an existing app. Triggers on phrases like "create expo app", "new expo typescript app", "bun create expo", "minimal expo app", "expo router app", "set up eas workflows", "add expo ci", "automate expo builds".
 metadata:
   author: chris@delacour.co.nz
-  version: "0.5.0"
+  version: "1.0.0"
   category: mobile
   tags: [mobile, expo, expo-router, routing, react-native, bun, typescript, scaffolding, uniwind, tailwind, heroui, eas, eas-workflows, ci-cd]
 ---

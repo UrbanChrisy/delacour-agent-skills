@@ -1,6 +1,6 @@
 # HeroUI Native Setup (detailed procedure)
 
-Optional add-on for the `mobile-create-expo-app` skill. Follow these steps only when the user asks for HeroUI Native. **Requires Uniwind setup** ([./uniwind.md](./uniwind.md)) to be completed first — HeroUI Native is built on Uniwind + Tailwind v4. Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
+Optional add-on for the `dlc-expo` skill. Follow these steps only when the user asks for HeroUI Native. **Requires Uniwind setup** ([./uniwind.md](./uniwind.md)) to be completed first — HeroUI Native is built on Uniwind + Tailwind v4. Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
 
 Source: <https://www.heroui.com/docs/native/getting-started/quick-start>
 

@@ -1,6 +1,6 @@
 # EAS Workflows Setup (detailed procedure)
 
-Optional add-on for the `mobile-create-expo-app` skill. Wires up Expo's first-party CI/CD primitive — EAS Workflows — for native builds, OTA updates, and store submissions. Independent of Uniwind / HeroUI; can be applied to any Expo app produced by this skill (or a comparable layout). Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
+Optional add-on for the `dlc-expo` skill. Wires up Expo's first-party CI/CD primitive — EAS Workflows — for native builds, OTA updates, and store submissions. Independent of Uniwind / HeroUI; can be applied to any Expo app produced by this skill (or a comparable layout). Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
 
 Source: <https://docs.expo.dev/eas/workflows/get-started/>
 
@@ -56,7 +56,7 @@ Source: <https://docs.expo.dev/eas/workflows/get-started/>
    cp <skill-dir>/assets/eas/eas.json ./eas.json
    ```
 
-   Replace `<skill-dir>` with the absolute path to `skills/mobile/mobile-create-expo-app/` inside this repo. If `eas init` already created an `eas.json` (typically `{}`), overwrite it.
+   Replace `<skill-dir>` with the absolute path to `skills/mobile/dlc-expo/` inside this repo. If `eas init` already created an `eas.json` (typically `{}`), overwrite it.
 
    Then substitute the iOS submit placeholders with the values from step 1:
 

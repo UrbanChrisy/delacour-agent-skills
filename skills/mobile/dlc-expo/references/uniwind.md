@@ -1,6 +1,6 @@
 # Uniwind (Tailwind) Setup (detailed procedure)
 
-Optional add-on for the `mobile-create-expo-app` skill. Follow these steps only when the user asks for Tailwind / Uniwind styling. Assumes the base scaffold in [scaffold.md](./scaffold.md) has already been completed (Expo Router is wired, `src/app/_layout.tsx` exists, Metro is the bundler). Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
+Optional add-on for the `dlc-expo` skill. Follow these steps only when the user asks for Tailwind / Uniwind styling. Assumes the base scaffold in [scaffold.md](./scaffold.md) has already been completed (Expo Router is wired, `src/app/_layout.tsx` exists, Metro is the bundler). Do not skip steps and do not paraphrase commands or code snippets, copy them as written.
 
 Source: https://docs.uniwind.dev/quickstart
 

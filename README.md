@@ -6,16 +6,16 @@ Reusable, versioned agent skills for Delacour. One command to install any skill 
 
 ```bash
 # Install a skill
-bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --skill mobile-create-expo-app
+bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --skill dlc-expo
 
 # List available skills
 bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --list
 
 # Install for a specific agent
-bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --skill mobile-create-expo-app -a claude-code
+bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --skill dlc-expo -a claude-code
 
 # Install to all detected agents globally
-bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --skill mobile-create-expo-app -g --all
+bunx skills add https://github.com/UrbanChrisy/delacour-agent-skills.git --skill dlc-expo -g --all
 ```
 
 **Prerequisites:** Access to the Delacour `delacour-agent-skills` repo and SSH/HTTPS auth configured.
