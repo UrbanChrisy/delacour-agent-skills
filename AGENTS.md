@@ -26,7 +26,7 @@ Each category directory contains skill subdirectories. Each skill subdirectory c
 
 ```yaml
 ---
-name: skill-name          # kebab-case, unique across the entire repo
+name: dlc-skill-name      # kebab-case, unique, prefixed `dlc-` (Delacour)
 description: >            # What the skill does AND when to use it.
   Include trigger phrases so agents know when to activate it.
 ---
@@ -87,7 +87,7 @@ Before/after or usage examples if helpful.
 
 Check that:
 
-- [ ] `name` is kebab-case and unique (no duplicates across the repo)
+- [ ] `name` is kebab-case, unique (no duplicates across the repo), and prefixed `dlc-` (short for Delacour)
 - [ ] `description` includes trigger phrases
 - [ ] Instructions are specific and actionable
 - [ ] No references to specific agent UI
