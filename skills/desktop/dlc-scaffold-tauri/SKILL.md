@@ -5,7 +5,7 @@ license: UNLICENSED
 allowed-tools: Read, Write, Edit, Bash(*), Glob, Grep
 metadata:
   author: chris@delacour.co.nz
-  version: "0.1.0"
+  version: "0.1.1"
   category: desktop
   tags: [tauri, desktop, rust, tanstack-router, monorepo]
   argument-hint: <app-name>
@@ -50,46 +50,11 @@ If `$1` is empty, ask the user for an app name. Detect `@{org}` scope from root 
 
 ### `apps/$1/tsconfig.json`
 
-```json
-{
-  "extends": "@{org}/tsconfig/tsconfig.react.json",
-  "compilerOptions": {
-    "composite": false,
-    "rootDir": ".",
-    "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"] },
-    "noUnusedLocals": false
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "references": [{ "path": "./tsconfig.node.json" }]
-}
-```
+Use the **Tauri desktop app** variant from `/dlc-scaffold-tsconfig` (extends react, `noUnusedLocals: false`, references `./tsconfig.node.json`).
 
 ### `apps/$1/biome.jsonc`
 
-```jsonc
-{
-  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
-  "extends": "//",
-  "root": false,
-  "files": {
-    "includes": ["src/**/*", "!src/routeTree.gen.ts"]
-  },
-  "css": {
-    "parser": { "tailwindDirectives": true }
-  },
-  "overrides": [
-    {
-      "includes": ["src/_routes/**/*"],
-      "linter": {
-        "rules": {
-          "style": { "useFilenamingConvention": "off" }
-        }
-      }
-    }
-  ]
-}
-```
+Use the **React app variant (TanStack / Tauri)** from `/dlc-scaffold-biome`.
 
 ### `apps/$1/src-tauri/tauri.conf.json`
 
