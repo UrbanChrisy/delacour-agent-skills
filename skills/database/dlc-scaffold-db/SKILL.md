@@ -117,7 +117,7 @@ export default defineConfig({
 ### `packages/$1/src/index.ts`
 
 ```typescript
-// NOTE: `./client` is intentionally NOT re-exported here — it imports
+// NOTE: `./client` is intentionally NOT re-exported here - it imports
 // `drizzle-orm/bun-sql`, which pulls the Bun-only `"bun"` built-in into any
 // client-reachable module graph (bundlers like Vite won't tree-shake it out).
 // Server-only consumers import `getDb`/`DrizzleDb` from `./client` directly.
@@ -140,7 +140,7 @@ export type DrizzleDb = ReturnType<typeof drizzle<typeof schema>>;
 /** The transaction handle passed to `db.transaction((tx) => ...)`. */
 export type DrizzleTx = Parameters<Parameters<DrizzleDb["transaction"]>[0]>[0];
 
-/** Either a pooled connection or an open transaction — anything that can run writes. */
+/** Either a pooled connection or an open transaction - anything that can run writes. */
 export type DrizzleExecutor = DrizzleDb | DrizzleTx;
 
 let _db: DrizzleDb | undefined;
@@ -167,7 +167,7 @@ export function getDb(): DrizzleDb {
 					if (err) console.error("[db] connect failed", err);
 				},
 				onclose: (err) => {
-					// Ignore expected recycles (idle + max-lifetime) — only log real failures.
+					// Ignore expected recycles (idle + max-lifetime) - only log real failures.
 					if (!err) return;
 					if (/idle timeout|lifetime/i.test(err.message)) return;
 					console.warn("[db] connection closed", err.message);
@@ -458,7 +458,7 @@ run().catch((err) => {
 
 ```typescript
 /**
- * Demo seed — populates a local/dev database with sample data.
+ * Demo seed - populates a local/dev database with sample data.
  *
  * Usage:
  *   DATABASE_URL=<url> bun run seed
@@ -482,7 +482,7 @@ run().catch((err) => {
 
 ```typescript
 /**
- * Production seed — idempotent reference data only (no demo/sample rows).
+ * Production seed - idempotent reference data only (no demo/sample rows).
  *
  * Usage:
  *   DATABASE_URL=<url> bun run seed:production
@@ -492,7 +492,7 @@ import { getDb } from "../client";
 
 async function run() {
 	const db = getDb();
-	void db; // TODO: upsert required reference data (idempotent — safe to re-run).
+	void db; // TODO: upsert required reference data (idempotent - safe to re-run).
 	console.log("Production seed complete.");
 }
 
@@ -538,7 +538,7 @@ Drizzle ORM + PostgreSQL. Shared schema, services, and DB client.
 ### Schema Files
 
 - One domain per file: `{name}.schema.ts` holds tables + relations + inferred types
-- Enums are **string-union types** applied with `text("col").$type<Union>()` — not `pgEnum`
+- Enums are **string-union types** applied with `text("col").$type<Union>()` - not `pgEnum`
 - UUID primary keys: `uuid("id").default(sql`pg_catalog.gen_random_uuid()`).primaryKey()`
 - Timestamps: `created_at` + `updated_at` with `withTimezone: true`, `.defaultNow().notNull()`
 - Auto-update: `.$onUpdate(() => new Date())` on `updated_at`
@@ -639,7 +639,7 @@ export type UpdateItemInput = z.input<typeof updateItemSchema>;
 ### Service Files
 
 - One service class per table/domain; constructor takes a `DrizzleDb`
-- Every method is **org-scoped** — takes `orgId` and filters on `organizationId`
+- Every method is **org-scoped** - takes `orgId` and filters on `organizationId`
 - `AsyncResult<T>` return types from `@{org}/types` (`ok()` / `err()`)
 - Validate mutation input with the zod `create*`/`update*` schema via `safeParse()` before
   touching the DB; on failure return `err(issues.map((i) => i.message).join(", "))`
@@ -773,7 +773,7 @@ export function createServices(db: DrizzleDb) {
 
 ### Imports
 
-- External consumers: import from `@{org}/$1` (barrel) — never deep paths
+- External consumers: import from `@{org}/$1` (barrel) - never deep paths
 - The client is **not** in the barrel: import `getDb`/`DrizzleDb` from `@{org}/$1/src/client`
 - Internal services/schema: import from sibling files (`../schema/item.schema`, `../schema/item.schema.zod`)
 - Schema files can cross-import (e.g. FK targets, shared `JsonValue`)
@@ -781,7 +781,7 @@ export function createServices(db: DrizzleDb) {
 ### Migrations
 
 - Run `bun run generate` after schema changes
-- NEVER run `bun run migrate` locally / from an agent — applied in deploy pre-step only
+- NEVER run `bun run migrate` locally / from an agent - applied in deploy pre-step only
 - Never manually edit migration SQL
 ````
 
