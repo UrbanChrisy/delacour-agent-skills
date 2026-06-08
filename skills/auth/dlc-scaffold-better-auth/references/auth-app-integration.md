@@ -183,7 +183,7 @@ export const Route = createFileRoute("/_authed/admin")({
 		if (!context.user) {
 			throw redirect({ to: "/login" });
 		}
-		if (context.user.user.role !== "ADMIN") {
+		if (context.user.user.role !== "admin") {
 			throw redirect({ to: "/" });
 		}
 	},

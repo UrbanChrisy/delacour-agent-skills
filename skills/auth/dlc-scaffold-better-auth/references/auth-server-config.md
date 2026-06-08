@@ -2,13 +2,13 @@
 
 ```typescript
 import type { BetterAuthOptions } from "@better-auth/core";
-import { dash } from "@better-auth/infra";
-import { sentinelClient } from "@better-auth/infra/client";
-import type { DrizzleDb } from "@<org>/db";
+import { dash, sentinel } from "@better-auth/infra";
+import type { DrizzleDb } from "@<org>/db/src/client";
 import { type Auth as BetterAuth, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { emailOTP, organization } from "better-auth/plugins";
+import { admin, emailOTP, organization } from "better-auth/plugins";
 import { tanstackStartCookies } from "better-auth/tanstack-start";
+import { ac, roles } from "./permissions";
 
 export type CreateAuthOptions = {
 	db: DrizzleDb;
@@ -33,19 +33,10 @@ const createAuthOptions = (options: CreateAuthOptions) => {
 				generateId: "uuid",
 			},
 		},
-		user: {
-			additionalFields: {
-				role: {
-					type: "string",
-					required: false,
-					defaultValue: "USER",
-					input: false,
-				},
-			},
-		},
 		plugins: [
 			tanstackStartCookies(),
 			organization(),
+			admin({ ac, roles, defaultRole: "user", adminRoles: ["admin"] }),
 			emailOTP({
 				async sendVerificationOTP({ email, otp }) {
 					const { Resend } = await import("resend");
@@ -60,7 +51,7 @@ const createAuthOptions = (options: CreateAuthOptions) => {
 				otpLength: 6,
 				expiresIn: 600,
 			}),
-			sentinelClient(),
+			sentinel(),
 			dash(),
 		],
 		socialProviders: {
@@ -91,7 +82,8 @@ export type AuthUser = ReturnType<typeof createAuth>["$Infer"]["Session"]["user"
 - `createAuthOptions` is a separate internal function so `AuthOptions` type can be derived
 - `satisfies BetterAuthOptions` ensures type safety while preserving literal types
 - Dynamic `import("resend")` keeps the email SDK out of client bundles
-- `input: false` on role prevents users from setting their own role during signup
+- RBAC comes from the `admin()` plugin wired to the shared `ac`/`roles` from `./permissions` (see auth-permissions.md). Roles are lowercase `user`/`admin`; `defaultRole: "user"` assigns new users automatically. The plugin also adds `role`, `banned`, `banReason`, `banExpires` columns to the user table
+- `sentinel()` and `dash()` are server-side and import from `@better-auth/infra` (not `/client`)
 - Cookie plugin must match framework: swap `tanstackStartCookies()` for `nextCookies()` in Next.js
 
 ## Framework Cookie Plugin Swaps

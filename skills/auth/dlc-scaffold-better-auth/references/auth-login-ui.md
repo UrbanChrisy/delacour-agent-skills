@@ -315,8 +315,12 @@ export function OtpVerificationForm({
 
 ## 5. Role Types - `src/modules/auth/types/roles.ts`
 
+Prefer re-exporting the canonical `Role` type from the auth package (defined in `permissions.ts`) so server and client stay in sync:
+
 ```typescript
-export type UserRole = "USER" | "ADMIN";
+import type { Role } from "@<org>/auth";
+
+export type UserRole = Role; // "user" | "admin"
 ```
 
 ## 6. Role Utilities - `src/modules/auth/utils/role.ts`
@@ -326,11 +330,11 @@ import type { AuthSession } from "@<org>/auth";
 import type { UserRole } from "../types/roles";
 
 export function getUserRole(session: AuthSession): UserRole {
-	return session.user.role === "ADMIN" ? "ADMIN" : "USER";
+	return session.user.role === "admin" ? "admin" : "user";
 }
 
 export function isAdmin(session: AuthSession): boolean {
-	return getUserRole(session) === "ADMIN";
+	return getUserRole(session) === "admin";
 }
 ```
 
@@ -341,7 +345,7 @@ import { useRouteContext } from "@tanstack/react-router";
 
 export function useIsAdmin(): boolean {
 	const { user } = useRouteContext({ from: "/_authed" });
-	return user.user.role === "ADMIN";
+	return user.user.role === "admin";
 }
 ```
 
