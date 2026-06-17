@@ -241,8 +241,17 @@ async function checkLinks(
   const errors: string[] = [];
   const urls = body.match(/https?:\/\/[^\s)\]>"'']+/g) || [];
 
+  // Hosts that are never meant to be live external links (dev servers).
+  const SKIP_HOSTS = /^(localhost|127\.0\.0\.1|0\.0\.0\.0|\[::1\])(:|\/|$)/;
+
   for (let url of urls) {
-    url = url.replace(/[.,;:]+$/, "");
+    url = url.replace(/[.,;:`)\]]+$/, "");
+
+    // Skip illustrative URLs that are not real links:
+    if (/\$?\{[^}]*\}/.test(url)) continue; // template placeholder (${port}, {name})
+    const host = url.replace(/^https?:\/\//, "");
+    if (SKIP_HOSTS.test(host)) continue; // local dev server
+
     try {
       const res = await fetch(url, { method: "HEAD", signal: AbortSignal.timeout(10_000) });
       if (!res.ok) {
