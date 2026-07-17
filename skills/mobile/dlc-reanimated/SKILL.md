@@ -1,6 +1,6 @@
 ---
 name: dlc-reanimated
-description: Generate React Native Reanimated animation code for React Native apps. Use when user asks to create, implement, or add animations in React Native — including transitions, gestures, scroll-linked effects, layout animations, layout transitions, entering/exiting animations, CSS animations, CSS transitions, shared element transitions, color animations, parallax, fade, slide, scale, spring, timing, decay, keyframes, worklets, accordion, bottom sheet, flip card, collapsing header, or any motion effect using react-native-reanimated. Also use for integrating react-native-gesture-handler with Reanimated, understanding worklets, animating between screens, testing animations with Jest, or checking which properties are animatable.
+description: Generate React Native Reanimated animation code for React Native apps. Use when user asks to create, implement, or add animations in React Native, including transitions, gestures, scroll-linked effects, layout animations, layout transitions, entering/exiting animations, CSS animations, CSS transitions, shared element transitions, color animations, parallax, fade, slide, scale, spring, timing, decay, keyframes, worklets, accordion, bottom sheet, flip card, collapsing header, or any motion effect using react-native-reanimated. Also use for integrating react-native-gesture-handler with Reanimated, understanding worklets, animating between screens, testing animations with Jest, or checking which properties are animatable.
 ---
 
 # Delacour React Native Reanimated Code Generator
@@ -130,7 +130,7 @@ const scrollOffset = useScrollOffset(ref); // auto-tracks scroll position
 
 ## Layout Animations (Mount/Unmount)
 
-Built-in presets — no shared values needed:
+Built-in presets, no shared values needed:
 
 ```tsx
 import Animated, { FadeIn, SlideInRight, SlideOutLeft } from 'react-native-reanimated';
@@ -243,13 +243,13 @@ For testing animations with Jest, animating colors with `interpolateColor`, and 
 
 ## Rules
 
-- Always use `Animated.View/Text/Image/ScrollView/FlatList` — never animate plain RN components
+- Always use `Animated.View/Text/Image/ScrollView/FlatList`, never animate plain RN components
 - v4: use `runOnJS`/`runOnUI` (re-exported), or import `scheduleOnRN`/`scheduleOnUI` from `react-native-worklets`
 - v3: use `runOnJS(fn)()` for heavy JS-thread logic
 - Always use `Extrapolation.CLAMP` with `interpolate` unless you explicitly want extrapolation
 - Combine: `withSequence(withTiming(1.2, {duration: 100}), withSpring(1))`
 - Use `useReducedMotion()` to respect accessibility settings
-- Test on real devices — simulator performance differs significantly
+- Test on real devices - simulator performance differs significantly
 - v4: `useAnimatedKeyboard` is deprecated → use `react-native-keyboard-controller`
 
 ---

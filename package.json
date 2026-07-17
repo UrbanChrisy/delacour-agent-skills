@@ -4,9 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "validate": "bun run scripts/validate-skills.ts"
+    "validate": "bun run scripts/validate-skills.ts",
+    "prepare": "prek install --hook-type pre-commit --hook-type pre-push"
   },
   "devDependencies": {
+    "@j178/prek": "^0.4.10",
     "@types/bun": "latest"
   },
   "peerDependencies": {

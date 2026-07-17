@@ -149,3 +149,18 @@ Check that URLs in skills are reachable (runs automatically on main pushes):
 ```bash
 bun run scripts/validate-skills.ts --check-links
 ```
+
+### Local Git Hooks (prek)
+
+The same validation runs locally via [prek](https://prek.j178.dev) (a fast, drop-in pre-commit replacement) so issues are caught before they reach CI:
+
+- **pre-commit** runs the fast structural check (frontmatter, naming, uniqueness, schema, em-dash ban). Offline, no network.
+- **pre-push** additionally runs `--check-links` to verify external URLs are reachable, mirroring the CI check on `main`.
+
+Hooks install automatically after `bun install` (via the `prepare` script). To install them manually:
+
+```bash
+bunx prek install --hook-type pre-commit --hook-type pre-push
+```
+
+The hooks only run when a `SKILL.md` is staged. In an emergency, bypass with `git commit --no-verify` or `git push --no-verify`. Config lives in [.pre-commit-config.yaml](.pre-commit-config.yaml).

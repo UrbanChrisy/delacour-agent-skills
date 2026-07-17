@@ -1,0 +1,23 @@
+# Local skill-validation hooks, run via prek (https://prek.j178.dev).
+# Install: bunx prek install  (auto-run by the package.json "prepare" script on `bun install`).
+# Bypass in an emergency: git commit --no-verify / git push --no-verify.
+default_install_hook_types: [pre-commit, pre-push]
+repos:
+  - repo: local
+    hooks:
+      # Fast, offline: frontmatter, naming, uniqueness, schema, structure, em-dash ban.
+      - id: validate-skills
+        name: Validate SKILL.md frontmatter & structure
+        entry: bun run scripts/validate-skills.ts
+        language: system
+        files: (^|/)SKILL\.md$
+        pass_filenames: false
+        stages: [pre-commit]
+      # Thorough: everything above + live external-link reachability (mirrors CI on main).
+      - id: validate-skills-links
+        name: Validate SKILL.md links (reachability)
+        entry: bun run scripts/validate-skills.ts --check-links
+        language: system
+        files: (^|/)SKILL\.md$
+        pass_filenames: false
+        stages: [pre-push]
